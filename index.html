@@ -5,12 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Douglas Almeida | Full Stack & Cloud Engineer</title>
     
-    <link rel="icon" type="image/x-icon" href="./favicon/favicon.ico">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.7.32/sweetalert2.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
     <style>
         :root {
@@ -26,6 +25,7 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
             font-family: 'Poppins', sans-serif;
             background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
@@ -36,36 +36,174 @@
 
         /* Navbar */
         nav {
-            position: fixed; top: 0; width: 100%;
+            position: fixed; 
+            top: 0; 
+            width: 100%;
             background: rgba(15, 23, 42, 0.95);
             backdrop-filter: blur(12px);
-            padding: 1rem 0; z-index: 1000;
+            padding: 1rem 0; 
+            z-index: 1000;
             border-bottom: 1px solid rgba(255,255,255,0.08);
+            transition: all 0.3s ease;
         }
-        nav .container-fluid { max-width: var(--max-w); display: flex; justify-content: space-between; align-items: center; padding: 0 5%; }
-        .logo { font-size: 1.6rem; font-weight: 800; background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -1px; }
-        nav ul { display: flex; list-style: none; gap: 3rem; margin: 0; }
-        nav a { color: var(--text-light); text-decoration: none; font-weight: 500; transition: 0.3s; font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; }
-        nav a:hover { color: var(--primary); }
+
+        nav.scrolled {
+            padding: 0.5rem 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        nav .container-fluid { 
+            max-width: var(--max-w); 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 0 5%; 
+        }
+
+        .logo { 
+            font-size: 1.6rem; 
+            font-weight: 800; 
+            background: linear-gradient(135deg, var(--primary), var(--secondary)); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+            letter-spacing: -1px;
+            cursor: pointer;
+        }
+
+        .nav-menu { 
+            display: flex; 
+            list-style: none; 
+            gap: 3rem; 
+            margin: 0; 
+        }
+
+        .nav-menu a { 
+            color: var(--text-light); 
+            text-decoration: none; 
+            font-weight: 500; 
+            transition: 0.3s; 
+            font-size: 1rem; 
+            text-transform: uppercase; 
+            letter-spacing: 1px;
+            position: relative;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-menu a:hover::after { width: 100%; }
+        .nav-menu a:hover { color: var(--primary); }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            width: 28px;
+            height: 3px;
+            background: var(--text-light);
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
 
         /* Sections */
-        section { padding: 120px 5%; max-width: var(--max-w); margin: 0 auto; }
-        .section-title { text-align: left; font-size: 3.5rem; margin-bottom: 4rem; font-weight: 800; position: relative; }
-        .section-title::before { content: ''; position: absolute; left: 0; bottom: -10px; width: 80px; height: 6px; background: var(--primary); border-radius: 10px; }
+        section { 
+            padding: 120px 5%; 
+            max-width: var(--max-w); 
+            margin: 0 auto; 
+        }
+
+        .section-title { 
+            text-align: left; 
+            font-size: 3.5rem; 
+            margin-bottom: 4rem; 
+            font-weight: 800; 
+            position: relative; 
+        }
+
+        .section-title::before { 
+            content: ''; 
+            position: absolute; 
+            left: 0; 
+            bottom: -10px; 
+            width: 80px; 
+            height: 6px; 
+            background: var(--primary); 
+            border-radius: 10px; 
+        }
 
         /* Hero */
-        .hero { min-height: 100vh; display: flex; align-items: center; }
-        .hero-content { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 4rem; width: 100%; align-items: center; }
-        .hero-text h1 { font-size: 5rem; font-weight: 800; line-height: 1; margin-bottom: 25px; }
-        .hero-text p { font-size: 1.4rem; color: var(--text-gray); max-width: 900px; margin-bottom: 40px; }
+        .hero { 
+            min-height: 100vh; 
+            display: flex; 
+            align-items: center; 
+            padding-top: 80px;
+        }
+
+        .hero-content { 
+            display: grid; 
+            grid-template-columns: 1.2fr 0.8fr; 
+            gap: 4rem; 
+            width: 100%; 
+            align-items: center; 
+        }
+
+        .hero-text h2 {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .hero-text h1 { 
+            font-size: 5rem; 
+            font-weight: 800; 
+            line-height: 1.1; 
+            margin-bottom: 25px; 
+        }
+
+        .hero-text p { 
+            font-size: 1.4rem; 
+            color: var(--text-gray); 
+            max-width: 900px; 
+            margin-bottom: 40px; 
+        }
 
         .profile-image {
-            width: 480px; height: 480px; object-fit: cover;
+            width: 480px; 
+            height: 480px; 
+            object-fit: cover;
             border: 8px solid var(--primary);
             box-shadow: 0 0 60px rgba(99, 102, 241, 0.25);
             animation: morph 8s ease-in-out infinite;
             justify-self: center;
         }
+
         @keyframes morph {
             0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
             50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
@@ -73,52 +211,380 @@
 
         /* Glass Cards */
         .glass-card {
-            background: var(--card-bg); border-radius: 28px; padding: 3.5rem;
-            border: 1px solid rgba(255,255,255,0.05); transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: var(--card-bg); 
+            border-radius: 28px; 
+            padding: 3.5rem;
+            border: 1px solid rgba(255,255,255,0.05); 
+            transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             height: 100%;
         }
-        .glass-card:hover { transform: translateY(-12px); border-color: var(--primary); box-shadow: 0 30px 60px rgba(0,0,0,0.4); }
+
+        .glass-card:hover { 
+            transform: translateY(-12px); 
+            border-color: var(--primary); 
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4); 
+        }
 
         /* Projects Grid */
-        .projects-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 3rem; }
-        .project-card { border-left: 10px solid var(--primary); }
-        .project-features { list-style: none; padding: 0; margin: 25px 0; }
-        .project-features li { margin-bottom: 12px; display: flex; align-items: flex-start; gap: 10px; color: var(--text-gray); }
-        .project-features li::before { content: '→'; color: var(--primary); font-weight: 800; }
+        .projects-grid { 
+            display: grid; 
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 3rem; 
+        }
+
+        .project-card { 
+            border-left: 10px solid var(--primary);
+            cursor: pointer;
+        }
+
+        .project-features { 
+            list-style: none; 
+            padding: 0; 
+            margin: 25px 0; 
+        }
+
+        .project-features li { 
+            margin-bottom: 12px; 
+            display: flex; 
+            align-items: flex-start; 
+            gap: 10px; 
+            color: var(--text-gray); 
+        }
+
+        .project-features li::before { 
+            content: '→'; 
+            color: var(--primary); 
+            font-weight: 800; 
+        }
 
         /* Buttons */
-        .btn-main { padding: 18px 40px; border-radius: 50px; font-weight: 700; font-size: 1.1rem; transition: 0.3s; text-decoration: none; display: inline-flex; align-items: center; gap: 15px; border: none; }
-        .btn-p { background: var(--primary); color: white; }
-        .btn-s { border: 2px solid var(--primary); color: var(--primary); background: transparent; }
-        .btn-main:hover { transform: scale(1.05); box-shadow: 0 15px 30px rgba(99, 102, 241, 0.3); color: white; }
+        .btn-main { 
+            padding: 18px 40px; 
+            border-radius: 50px; 
+            font-weight: 700; 
+            font-size: 1.1rem; 
+            transition: 0.3s; 
+            text-decoration: none; 
+            display: inline-flex; 
+            align-items: center; 
+            gap: 15px; 
+            border: none;
+            cursor: pointer;
+        }
 
-        /* Stats */
-        .stat-box { text-align: center; padding: 20px; border-radius: 20px; background: rgba(255,255,255,0.03); }
-        .stat-box h2 { font-size: 2.5rem; font-weight: 800; color: var(--primary); margin-bottom: 5px; }
+        .btn-p { 
+            background: var(--primary); 
+            color: white; 
+        }
 
-        .fade-in { opacity: 0; transform: translateY(50px); transition: 1.2s ease-out; }
-        .fade-in.active { opacity: 1; transform: translateY(0); }
+        .btn-s { 
+            border: 2px solid var(--primary); 
+            color: var(--primary); 
+            background: transparent; 
+        }
 
-        footer { padding: 80px 5%; border-top: 1px solid rgba(255,255,255,0.05); text-align: center; }
-
-        @media (max-width: 1200px) {
-            .hero-content { grid-template-columns: 1fr; text-align: center; }
-            .hero-text h1 { font-size: 3.5rem; }
-            .projects-grid { grid-template-columns: 1fr; }
-            .profile-image { width: 300px; height: 300px; }
+        .btn-main:hover { 
+            transform: scale(1.05); 
+            box-shadow: 0 15px 30px rgba(99, 102, 241, 0.3); 
+            color: white; 
         }
 
         .btn-group {
-            gap: 3rem !important;
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
         }
+
+        /* Stats */
+        .stat-box { 
+            text-align: center; 
+            padding: 20px; 
+            border-radius: 20px; 
+            background: rgba(255,255,255,0.03);
+            transition: 0.3s ease;
+        }
+
+        .stat-box:hover {
+            background: rgba(255,255,255,0.06);
+            transform: translateY(-5px);
+        }
+
+        .stat-box h2 { 
+            font-size: 2.5rem; 
+            font-weight: 800; 
+            color: var(--primary); 
+            margin-bottom: 5px; 
+        }
+
+        /* Skills Section */
+        #skills {
+            background: rgba(0,0,0,0.2);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-card {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .skill-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .skill-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--text-light);
+        }
+
+        .skill-bar {
+            background: rgba(255,255,255,0.1);
+            height: 8px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .skill-progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 10px;
+            transition: width 1.5s ease;
+        }
+
+        /* Animations */
+        .fade-in { 
+            opacity: 0; 
+            transform: translateY(50px); 
+            transition: 1.2s ease-out; 
+        }
+
+        .fade-in.active { 
+            opacity: 1; 
+            transform: translateY(0); 
+        }
+
+        /* Footer */
+        footer { 
+            padding: 80px 5%; 
+            border-top: 1px solid rgba(255,255,255,0.05); 
+            text-align: center; 
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .social-links a {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            transition: 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .hero-text h1 { font-size: 3.5rem; }
+            .section-title { font-size: 2.5rem; }
+            .projects-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 992px) {
+            .hamburger { display: flex; }
+            
+            .nav-menu {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 300px;
+                height: 100vh;
+                background: rgba(15, 23, 42, 0.98);
+                backdrop-filter: blur(12px);
+                flex-direction: column;
+                padding: 100px 40px;
+                gap: 2rem;
+                transition: right 0.4s ease;
+                box-shadow: -5px 0 20px rgba(0,0,0,0.3);
+            }
+
+            .nav-menu.active { right: 0; }
+
+            .nav-menu a {
+                font-size: 1.2rem;
+                width: 100%;
+            }
+
+            .hero-content { 
+                grid-template-columns: 1fr; 
+                text-align: center;
+                gap: 3rem;
+            }
+
+            .hero-text h1 { font-size: 3rem; }
+            .hero-text h2 { font-size: 1.2rem; }
+            .hero-text p { font-size: 1.1rem; }
+
+            .profile-image { 
+                width: 350px; 
+                height: 350px; 
+            }
+
+            .btn-group { 
+                justify-content: center; 
+            }
+
+            section { padding: 80px 5%; }
+        }
+
+        @media (max-width: 768px) {
+            .hero-text h1 { font-size: 2.5rem; }
+            .section-title { font-size: 2rem; }
+            
+            .profile-image { 
+                width: 280px; 
+                height: 280px; 
+            }
+
+            .glass-card { padding: 2rem; }
+
+            .btn-main {
+                padding: 15px 30px;
+                font-size: 1rem;
+            }
+
+            .stat-box h2 { font-size: 2rem; }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo { font-size: 1.2rem; }
+            .hero-text h1 { font-size: 2rem; }
+            .hero-text h2 { font-size: 1rem; }
+            .hero-text p { font-size: 1rem; }
+            
+            .profile-image { 
+                width: 240px; 
+                height: 240px; 
+            }
+
+            .btn-group {
+                flex-direction: column;
+                gap: 1rem;
+                width: 100%;
+            }
+
+            .btn-main {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .section-title { font-size: 1.8rem; }
+
+            nav .container-fluid { padding: 0 20px; }
+            section { padding: 60px 20px; }
+        }
+
+        /* Scroll to Top Button */
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.3s ease;
+            z-index: 999;
+        }
+
+        .scroll-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.4);
+        }
+
+        /* Custom styles for SweetAlert links */
+        .swal-link-btn {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 12px;
+            padding: 15px 20px;
+            margin: 10px 0;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .swal-link-btn:hover {
+            background: rgba(99, 102, 241, 0.2);
+            border-color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        .swal-link-btn i {
+            font-size: 1.2rem;
+            width: 24px;
+        }
+
+        .swal-link-btn-aws { border-left: 4px solid var(--aws-color); }
+        .swal-link-btn-github { border-left: 4px solid #333; }
+        .swal-link-btn-list { border-left: 4px solid #10b981; }
+        .swal-link-btn-docs { border-left: 4px solid var(--secondary); }
     </style>
 </head>
 <body>
 
-    <nav>
+    <nav id="navbar">
         <div class="container-fluid">
-            <div class="logo">DOUGLAS ALMEIDA</div>
-            <ul>
+            <div class="logo" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">DOUGLAS ALMEIDA</div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-menu" id="navMenu">
                 <li><a href="#home">Início</a></li>
                 <li><a href="#about">Sobre</a></li>
                 <li><a href="#skills">Skills</a></li>
@@ -140,7 +606,7 @@
                 </div>
             </div>
             <div class="animate__animated animate__zoomIn">
-                <img src="img/douglasAlmeida3.jpeg" alt="Douglas Almeida" class="profile-image">
+                <img src="./img/douglasAlmeida3.jpeg" alt="Douglas Almeida" class="profile-image">
             </div>
         </div>
     </section>
@@ -166,7 +632,7 @@
                 <div class="row g-4">
                     <div class="col-6 col-xl-12">
                         <div class="stat-box">
-                            <h2>SMILE SAÚDE OFICIAL</h2>
+                            <h2>SMILE SAÚDE</h2>
                             <p>Saúde ERP Dev</p>
                         </div>
                     </div>
@@ -193,6 +659,65 @@
         </div>
     </section>
 
+    <section id="skills">
+        <h2 class="section-title fade-in">Habilidades Técnicas</h2>
+        <div class="skills-grid">
+            <div class="glass-card skill-card fade-in">
+                <i class="fab fa-php skill-icon" style="color: #8993be"></i>
+                <h3>PHP & Laravel</h3>
+                <p class="text-gray">Backend robusto e escalável</p>
+                <div class="skill-bar">
+                    <div class="skill-progress" style="width: 95%"></div>
+                </div>
+            </div>
+
+            <div class="glass-card skill-card fade-in">
+                <i class="fab fa-aws skill-icon" style="color: var(--aws-color)"></i>
+                <h3>AWS Cloud</h3>
+                <p class="text-gray">EC2, S3, VPC, Security Groups</p>
+                <div class="skill-bar">
+                    <div class="skill-progress" style="width: 85%"></div>
+                </div>
+            </div>
+
+            <div class="glass-card skill-card fade-in">
+                <i class="fas fa-database skill-icon" style="color: #f80000"></i>
+                <h3>Oracle Database</h3>
+                <p class="text-gray">Otimização e Query Tuning</p>
+                <div class="skill-bar">
+                    <div class="skill-progress" style="width: 90%"></div>
+                </div>
+            </div>
+
+            <div class="glass-card skill-card fade-in">
+                <i class="fab fa-js skill-icon" style="color: #f7df1e"></i>
+                <h3>JavaScript</h3>
+                <p class="text-gray">jQuery, Ajax, APIs REST</p>
+                <div class="skill-bar">
+                    <div class="skill-progress" style="width: 88%"></div>
+                </div>
+            </div>
+
+            <div class="glass-card skill-card fade-in">
+                <i class="fab fa-docker skill-icon" style="color: #2496ed"></i>
+                <h3>Docker</h3>
+                <p class="text-gray">Containerização e Deploy</p>
+                <div class="skill-bar">
+                    <div class="skill-progress" style="width: 80%"></div>
+                </div>
+            </div>
+
+            <div class="glass-card skill-card fade-in">
+                <i class="fas fa-robot skill-icon" style="color: var(--ai-color)"></i>
+                <h3>IA & Automação</h3>
+                <p class="text-gray">N8N, Analytics, ML</p>
+                <div class="skill-bar">
+                    <div class="skill-progress" style="width: 82%"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section id="projects">
         <h2 class="section-title fade-in">Ecossistema de Projetos</h2>
         <div class="projects-grid">
@@ -206,7 +731,7 @@
                     <li>Configuração de VPC e Security Groups.</li>
                     <li>Implementação de Signature V4 para segurança de objetos.</li>
                 </ul>
-                <div class="d-flex gap-2">
+                <div class="d-flex gap-2 flex-wrap">
                     <span class="badge bg-dark border border-secondary">Docker Compose</span>
                     <span class="badge bg-dark border border-secondary">PHP 8.3 SDK</span>
                 </div>
@@ -221,7 +746,7 @@
                     <li>Automação de fluxos complexos com N8N.</li>
                     <li>Dashboard estratégico integrado ao Banco Oracle.</li>
                 </ul>
-                <div class="d-flex gap-2">
+                <div class="d-flex gap-2 flex-wrap">
                     <span class="badge bg-dark border border-secondary">N8N</span>
                     <span class="badge bg-dark border border-secondary">AI Analytics</span>
                 </div>
@@ -236,7 +761,7 @@
                     <li>Módulo de atendimento com validação facial.</li>
                     <li>Integração com totens de autoatendimento.</li>
                 </ul>
-                <div class="d-flex gap-2">
+                <div class="d-flex gap-2 flex-wrap">
                     <span class="badge bg-dark border border-secondary">Oracle</span>
                     <span class="badge bg-dark border border-secondary">jQuery / Ajax</span>
                 </div>
@@ -258,57 +783,244 @@
 
     <section id="contact">
         <div class="glass-card text-center fade-in">
-            <h2 class="mb-4">Contatos</h2>
+            <h2 class="mb-4">Vamos Conversar?</h2>
+            <p class="fs-5 text-gray mb-4">Estou disponível para novos projetos e oportunidades</p>
             <div class="btn-group justify-content-center">
-                <a href="mailto:dougllas_17@outlook.com" class="btn-main btn-p"><i class="fas fa-paper-plane"></i> Email Profissional</a>
+                <a href="mailto:dougllas_17@outlook.com" class="btn-main btn-p"><i class="fas fa-paper-plane"></i> Email</a>
                 <a href="https://wa.me/5582994078350" target="_blank" class="btn-main btn-s"><i class="fab fa-whatsapp"></i> WhatsApp</a>
             </div>
         </div>
     </section>
 
     <footer>
-        <p>© <span id="year"></span> Douglas Almeida. Desenvolvido com foco em escalabilidade.</p>
+        <div class="social-links">
+            <a href="https://github.com/douglasalmeida21091994" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            <a href="https://linkedin.com/in/douglasalmeidadev94" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            <a href="mailto:dougllas_17@outlook.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+        </div>
+        <p class="mt-4">© <span id="year"></span> Douglas Almeida. Desenvolvido com foco em escalabilidade e performance.</p>
     </footer>
+
+    <div class="scroll-top" id="scrollTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.7.32/sweetalert2.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
     <script>
-        $(document).ready(function() {
-            $('#year').text(new Date().getFullYear());
+        // Year in footer
+        document.getElementById('year').textContent = new Date().getFullYear();
 
-            function reveal() {
-                $('.fade-in').each(function() {
-                    var elementTop = $(this).offset().top;
-                    if (elementTop < $(window).scrollTop() + $(window).height() - 100) {
-                        $(this).addClass('active');
-                    }
-                });
-            }
-            $(window).on('scroll', reveal);
-            reveal();
+        // Hamburger Menu Toggle
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('navMenu');
 
-            $('a[href^="#"]').click(function(e) {
-                e.preventDefault();
-                $('html, body').animate({ scrollTop: $($(this).attr('href')).offset().top - 80 }, 600);
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // Close menu when clicking on a link
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
             });
         });
 
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!navMenu.contains(e.target) && !hamburger.contains(e.target)) {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            }
+        });
+
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.15,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // Skill bars animation
+        const skillObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const progressBars = entry.target.querySelectorAll('.skill-progress');
+                    progressBars.forEach(bar => {
+                        bar.style.width = bar.style.width;
+                    });
+                }
+            });
+        }, { threshold: 0.5 });
+
+        document.querySelectorAll('.skill-card').forEach(card => skillObserver.observe(card));
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const offsetTop = target.offsetTop - 80;
+                    window.scrollTo({
+                        top: offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Scroll to top button
+        const scrollTopBtn = document.getElementById('scrollTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 500) {
+                scrollTopBtn.classList.add('active');
+            } else {
+                scrollTopBtn.classList.remove('active');
+            }
+        });
+
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // SweetAlert for AWS Project
         function swalAWS() {
             Swal.fire({
+                title: '<strong>AWS Storage Lab</strong>',
+                icon: 'info',
+                html: `
+                    <div style="text-align: left; padding: 15px 5px;">
+                        <p style="font-size: 1.1rem; margin-bottom: 20px; color: #94a3b8;">
+                            Sistema completo de armazenamento em nuvem desenvolvido para demonstrar competência técnica em infraestrutura AWS.
+                        </p>
+                        
+                        <div style="margin: 25px 0;">
+                            <strong style="color: #e2e8f0; display: block; margin-bottom: 15px; font-size: 1rem;">📋 Funcionalidades Implementadas:</strong>
+                            <ul style="list-style: none; padding-left: 0; margin-bottom: 25px;">
+                                <li style="margin-bottom: 10px; padding-left: 20px; position: relative;">
+                                    <i class="fas fa-check-circle" style="color: #10b981; position: absolute; left: 0;"></i>
+                                    Upload seguro com validação de tipos
+                                </li>
+                                <li style="margin-bottom: 10px; padding-left: 20px; position: relative;">
+                                    <i class="fas fa-check-circle" style="color: #10b981; position: absolute; left: 0;"></i>
+                                    Listagem de objetos com metadados
+                                </li>
+                                <li style="margin-bottom: 10px; padding-left: 20px; position: relative;">
+                                    <i class="fas fa-check-circle" style="color: #10b981; position: absolute; left: 0;"></i>
+                                    Download com URL pré-assinada (Signature V4)
+                                </li>
+                                <li style="margin-bottom: 10px; padding-left: 20px; position: relative;">
+                                    <i class="fas fa-check-circle" style="color: #10b981; position: absolute; left: 0;"></i>
+                                    VPC isolada com Security Groups
+                                </li>
+                                <li style="padding-left: 20px; position: relative;">
+                                    <i class="fas fa-check-circle" style="color: #10b981; position: absolute; left: 0;"></i>
+                                    Interface web responsiva
+                                </li>
+                            </ul>
+                        </div>
+
+                        <strong style="color: #e2e8f0; display: block; margin-bottom: 15px; font-size: 1rem;">🔗 Acesse o Projeto:</strong>
+                        
+                        <a href="https://douglas-almeida.duckdns.org/aws-s3/src/index.php" target="_blank" class="swal-link-btn swal-link-btn-aws">
+                            <i class="fab fa-aws" style="color: #ff9900;"></i>
+                            <span>Ver Projeto na AWS EC2</span>
+                        </a>
+                        
+                        <a href="https://douglas-almeida.duckdns.org/aws-s3/src/listar.php" target="_blank" class="swal-link-btn swal-link-btn-list">
+                            <i class="fas fa-list" style="color: #10b981;"></i>
+                            <span>Listagem de Arquivos S3 + RDS MySQL</span>
+                        </a>
+                        
+                        <a href="https://github.com/douglasalmeida21091994/aws-s3" target="_blank" class="swal-link-btn swal-link-btn-github">
+                            <i class="fab fa-github" style="color: #fff;"></i>
+                            <span>Código Fonte no GitHub</span>
+                        </a>
+                        
+                        <a href="https://github.com/douglasalmeida21091994/aws-s3/blob/main/README.md" target="_blank" class="swal-link-btn swal-link-btn-docs">
+                            <i class="fas fa-book" style="color: #8b5cf6;"></i>
+                            <span>Documentação Completa (README)</span>
+                        </a>
+
+                        <div style="margin-top: 25px; padding: 15px; background: rgba(99, 102, 241, 0.1); border-radius: 10px; border-left: 4px solid #6366f1;">
+                            <strong style="color: #e2e8f0; font-size: 0.9rem;">🛠️ Stack Técnica:</strong>
+                            <p style="color: #94a3b8; margin-top: 5px; font-size: 0.9rem;">
+                                PHP 8.3 | AWS SDK | Docker Compose | Apache | MySQL RDS | EC2 | S3
+                            </p>
+                        </div>
+                    </div>
+                `,
+                showCloseButton: true,
+                showConfirmButton: false,
+                width: '750px',
                 background: '#1e293b',
                 color: '#e2e8f0',
-                title: 'AWS Cloud Evidence',
-                text: 'Deseja acessar o laboratório na EC2 ou o repositório no GitHub?',
-                confirmButtonColor: '#6366f1',
-                showDenyButton: true,
-                confirmButtonText: '<i class="fas fa-rocket"></i> Ver Live',
-                denyButtonText: '<i class="fab fa-github"></i> GitHub',
-                denyButtonColor: '#475569'
-            }).then((result) => {
-                if (result.isConfirmed) window.open('http://35.175.125.55/index.php', '_blank');
-                else if (result.isDenied) window.open('https://github.com/douglasalmeida21091994/aws-s3', '_blank');
+                customClass: {
+                    popup: 'swal-custom-popup'
+                }
             });
         }
+
+        // Add custom styles for SweetAlert
+        const style = document.createElement('style');
+        style.textContent = `
+            .swal-custom-popup {
+                border: 1px solid rgba(255,255,255,0.1);
+                border-radius: 20px;
+                padding: 0 !important;
+            }
+            .swal2-html-container {
+                overflow: visible !important;
+                padding: 0 1.6em !important;
+            }
+            .swal2-title {
+                color: #e2e8f0 !important;
+                padding-top: 1.5em !important;
+                font-size: 1.5rem !important;
+            }
+            .swal2-close {
+                color: #94a3b8 !important;
+                font-size: 1.8rem !important;
+            }
+            .swal2-close:hover {
+                color: #e2e8f0 !important;
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Typing effect for hero title (optional enhancement)
+        const heroTitle = document.querySelector('.hero-text h1');
+        const originalText = heroTitle.innerHTML;
+
     </script>
+
 </body>
 </html>
